@@ -1,7 +1,11 @@
 import React from "react";
 import './TaskItem.css'
-import {Button, Tooltip} from "antd";
+import {Button, Popconfirm, Tooltip} from "antd";
 import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons";
+
+type TaskItemState = {
+    showingConfirm: boolean,
+}
 
 export type TaskItemProp = {
     text: string;
@@ -10,9 +14,10 @@ export type TaskItemProp = {
     onDone?: any;
     onEdit?: any;
     onDelete?: any;
+    visibleConfirm?: boolean;
 }
 
-export class TaskItem extends React.Component<TaskItemProp> {
+export class TaskItem extends React.Component<TaskItemProp, TaskItemState> {
     getDoneButton() {
         const markAsText = 'Mark as ' + ((this.props.done) ? 'active' : 'done');
         const icon = this.props.done ? <CloseOutlined/> : <CheckOutlined/>;
@@ -27,6 +32,20 @@ export class TaskItem extends React.Component<TaskItemProp> {
         )
     }
 
+    /// source: https://codesandbox.io/s/v3yo8
+    handleVisibleChange = (visible: boolean) => {
+        if (!visible) {
+            this.setState({showingConfirm: visible});
+            return;
+        }
+
+        if (this.props.visibleConfirm) {
+            this.setState({showingConfirm: visible});
+        } else {
+            this.props.onDelete();
+        }
+    }
+
     render() {
         return (
             <div className={`TaskItem-container ${this.props.done ? 'TaskItem-dimmed' : ''}`}>
@@ -39,13 +58,19 @@ export class TaskItem extends React.Component<TaskItemProp> {
                             ghost
                         />
                     </Tooltip>
-                    <Tooltip title="Delete task">
+                    <Popconfirm
+                        title="Are you sure you want to delete this task?"
+                        okText="Yes"
+                        cancelText="Nah"
+                        onConfirm={this.props.onDelete}
+                        placement="bottom"
+                        onVisibleChange={this.handleVisibleChange}
+                    >
                         <Button
-                            onClick={this.props.onDelete}
                             icon={<DeleteOutlined/>}
                             danger
                         />
-                    </Tooltip>
+                    </Popconfirm>
                 </div>
                 <div className="Task-text">
                     {this.props.text}

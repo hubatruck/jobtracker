@@ -8,9 +8,14 @@ import {PlusOutlined} from "@ant-design/icons";
 
 const {Header, Content, Footer} = Layout;
 
+type Settings = {
+    showConfirmDialog: boolean;
+}
+
 type AppState = {
     newTaskText: string;
     taskListEntries: TaskItemProp[];
+    settings: Settings;
 }
 
 class App extends React.Component<any, AppState> {
@@ -19,11 +24,13 @@ class App extends React.Component<any, AppState> {
 
         this.state = {
             newTaskText: '',
+            settings: {showConfirmDialog: true},
             taskListEntries: []
         };
 
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
     }
 
     /**
@@ -89,6 +96,14 @@ class App extends React.Component<any, AppState> {
         localStorage.setItem('tasks', JSON.stringify(newTasks));
     }
 
+    handleShowConfirmChange(value: boolean) {
+        const settings = this.state.settings;
+        settings.showConfirmDialog = value;
+        this.setState({
+            settings: settings
+        });
+    }
+
     render() {
         let taskListItems;
         if (this.state.taskListEntries) {
@@ -101,6 +116,7 @@ class App extends React.Component<any, AppState> {
                               onDelete={() => this.handleDelete(item)}
                               onDone={() => this.handleDone(item)}
                               onEdit={() => this.handleEdit(item)}
+                              visibleConfirm={this.state.settings.showConfirmDialog}
                     />
                 )
             });
