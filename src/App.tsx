@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import {TaskItem, TaskItemProp} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Collapse, Layout, Switch} from "antd";
+import {Layout, Switch, Tabs} from "antd";
 import Search from "antd/es/input/Search";
-import {PlusOutlined, SettingOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, HomeOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
 
 const {Header, Content, Footer} = Layout;
 
@@ -187,8 +187,25 @@ class App extends React.Component<any, AppState> {
                 <Header style={{color: 'white'}}>JobTracker</Header>
                 <Content style={{padding: '0 25px'}}>
                     <div className="layout-content">
-                        <Collapse style={{margin: '0 10px', maxWidth: '400px'}}>
-                            <Collapse.Panel key={1} header="Settings" extra={<SettingOutlined/>}>
+                        <Tabs defaultActiveKey="1" type="card">
+                            <Tabs.TabPane tab={<span><HomeOutlined/> Home</span>} key="1">
+                                <div className="input-container">
+                                    <Search
+                                        placeholder="Type task here..."
+                                        allowClear
+                                        enterButton={<PlusOutlined/>}
+                                        value={this.state.newTaskText}
+                                        onSearch={this.handleSubmit}
+                                        onChange={this.handleInput}
+                                        style={{width: 400}}
+                                    />
+                                </div>
+                                <div className="App-task-container">
+                                    {taskListItems}
+                                </div>
+                            </Tabs.TabPane>
+                            <Tabs.TabPane tab={<span><SettingOutlined/>Settings</span>} key="2">
+                                <h3>Here you can change the behaviour of the application</h3>
                                 <table className="settings">
                                     <tr>
                                         <th> Action name</th>
@@ -213,22 +230,8 @@ class App extends React.Component<any, AppState> {
                                         </td>
                                     </tr>
                                 </table>
-                            </Collapse.Panel>
-                        </Collapse>
-                        <div className="input-container">
-                            <Search
-                                placeholder="Type task here..."
-                                allowClear
-                                enterButton={<PlusOutlined/>}
-                                value={this.state.newTaskText}
-                                onSearch={this.handleSubmit}
-                                onChange={this.handleInput}
-                                style={{width: 400}}
-                            />
-                        </div>
-                        <div className="App-task-container">
-                            {taskListItems}
-                        </div>
+                            </Tabs.TabPane>
+                        </Tabs>
                     </div>
 
                 </Content>
