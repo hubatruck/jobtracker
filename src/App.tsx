@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import {TaskItem, TaskItemProp} from "./Components/TaskItem";
-import "./Util";
 import {UTIL} from "./Util";
 import {Layout} from "antd";
 import Search from "antd/es/input/Search";
@@ -55,7 +54,6 @@ class App extends React.Component<any, AppState> {
 
         this.setState({
             newTaskText: '',
-            taskListEntries: tasks
         });
         this.updateTasks(tasks);
     }
@@ -100,12 +98,8 @@ class App extends React.Component<any, AppState> {
                               text={item.text}
                               done={item.done}
                               UUID={item.UUID}
-                              onDelete={() => {
-                                  this.handleDelete(item)
-                              }}
-                              onDone={() => {
-                                  this.handleDone(item);
-                              }}
+                              onDelete={() => this.handleDelete(item)}
+                              onDone={() => this.handleDone(item)}
                               onEdit={() => this.handleEdit(item)}
                     />
                 )
@@ -116,8 +110,8 @@ class App extends React.Component<any, AppState> {
             <Layout style={{
                 minHeight: '100vh',
             }}>
-                <Header style={{color:'white'}}>JobTracker</Header>
-                <Content style={{padding:'0 25px'}}>
+                <Header style={{color: 'white'}}>JobTracker</Header>
+                <Content style={{padding: '0 25px'}}>
                     <div className="layout-content">
                         <div className="input-container">
                             <Search
