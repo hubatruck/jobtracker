@@ -38,7 +38,8 @@ class App extends React.Component<any, AppState> {
      */
     componentDidMount() {
         const tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify([]));
-        this.setState({taskListEntries: tasks});
+        const settings = JSON.parse(localStorage.getItem('settings') || JSON.stringify({showConfirmDialog: true}));
+        this.setState({taskListEntries: tasks, settings: settings});
     }
 
     handleInput(event: React.FormEvent<HTMLInputElement>) {
@@ -102,6 +103,7 @@ class App extends React.Component<any, AppState> {
         this.setState({
             settings: settings
         });
+        localStorage.setItem('settings', JSON.stringify(settings));
     }
 
     render() {
