@@ -176,6 +176,39 @@ class App extends React.Component<any, AppState> {
                 <Header style={{color: 'white'}}>JobTracker</Header>
                 <Content style={{padding: '0 25px'}}>
                     <div className="layout-content">
+                        <Collapse style={{margin: '0 10px', maxWidth: '400px'}}>
+                            <Collapse.Panel key={1} header="Settings" extra={<SettingOutlined/>}>
+                                <table className="settings">
+                                    <tr>
+                                        <td>Show confirm dialog when deleting</td>
+                                        <td>
+                                            <Switch
+                                                onChange={this.handleShowConfirmChange}
+                                                checked={this.state.settings.showConfirmDialog}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Show active tasks first</td>
+                                        <td>
+                                            <Switch
+                                                onChange={this.handleShowActiveFirst}
+                                                checked={this.state.settings.showActiveTasksFirst}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hide done tasks</td>
+                                        <td>
+                                            <Switch
+                                                onChange={this.handleHideDoneTasks}
+                                                checked={this.state.settings.hideDone}
+                                            />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </Collapse.Panel>
+                        </Collapse>
                         <div className="input-container">
                             <Search
                                 placeholder="Type task here..."
@@ -191,39 +224,7 @@ class App extends React.Component<any, AppState> {
                             {taskListItems}
                         </div>
                     </div>
-                    <Collapse>
-                        <Collapse.Panel key={1} header="Settings" extra={<SettingOutlined/>}>
-                            <table className="settings">
-                                <tr>
-                                    <td>Show confirm dialog when deleting</td>
-                                    <td>
-                                        <Switch
-                                            onChange={this.handleShowConfirmChange}
-                                            checked={this.state.settings.showConfirmDialog}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Show active tasks first</td>
-                                    <td>
-                                        <Switch
-                                            onChange={this.handleShowActiveFirst}
-                                            checked={this.state.settings.showActiveTasksFirst}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Hide done tasks</td>
-                                    <td>
-                                        <Switch
-                                            onChange={this.handleHideDoneTasks}
-                                            checked={this.state.settings.hideDone}
-                                        />
-                                    </td>
-                                </tr>
-                            </table>
-                        </Collapse.Panel>
-                    </Collapse>
+
                 </Content>
                 <Footer style={{
                     textAlign: 'center',
