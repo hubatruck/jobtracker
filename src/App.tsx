@@ -142,6 +142,17 @@ class App extends React.Component<any, AppState> {
         />);
     }
 
+    createCustomSwitch(onChangeMethod: any, checkedStateBind: boolean) {
+        return (
+            <Switch
+                onChange={onChangeMethod}
+                checked={checkedStateBind}
+                checkedChildren={<CheckOutlined/>}
+                unCheckedChildren={<CloseOutlined/>}
+            />
+        );
+    }
+
     render() {
         let taskListItems;
         if (this.state.taskListEntries) {
@@ -180,30 +191,25 @@ class App extends React.Component<any, AppState> {
                             <Collapse.Panel key={1} header="Settings" extra={<SettingOutlined/>}>
                                 <table className="settings">
                                     <tr>
+                                        <th> Action name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    <tr>
                                         <td>Show confirm dialog when deleting</td>
                                         <td>
-                                            <Switch
-                                                onChange={this.handleShowConfirmChange}
-                                                checked={this.state.settings.showConfirmDialog}
-                                            />
+                                            {this.createCustomSwitch(this.handleShowConfirmChange, this.state.settings.showConfirmDialog)}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Show active tasks first</td>
                                         <td>
-                                            <Switch
-                                                onChange={this.handleShowActiveFirst}
-                                                checked={this.state.settings.showActiveTasksFirst}
-                                            />
+                                            {this.createCustomSwitch(this.handleShowActiveFirst, this.state.settings.showActiveTasksFirst)}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Hide done tasks</td>
+                                        <td>Hide completed tasks</td>
                                         <td>
-                                            <Switch
-                                                onChange={this.handleHideDoneTasks}
-                                                checked={this.state.settings.hideDone}
-                                            />
+                                            {this.createCustomSwitch(this.handleHideDoneTasks, this.state.settings.hideDone)}
                                         </td>
                                     </tr>
                                 </table>

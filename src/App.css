@@ -11,7 +11,7 @@ Header {
     margin: 10px;
 }
 
-.settings td{
+.settings td, .settings th {
     border: solid 1px #4b4b4b;
     padding: 5px;
 }
