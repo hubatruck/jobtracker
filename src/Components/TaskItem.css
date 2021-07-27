@@ -1,6 +1,14 @@
+.TaskItem-container{
+    margin:5px;
+}
+
 .TaskItem-controls {
     display: inline;
     margin: 10px;
+}
+
+.TaskItem-controls Button{
+    margin: 0 2px;
 }
 
 .Task-text{

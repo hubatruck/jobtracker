@@ -1,34 +1,12 @@
-.App {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #282c34;
-    color: white;
-}
-
-.App-header {
+Header {
     padding: 10px;
-    background-color: #1c2024;
     font-size: calc(10px + 2vmin);
 }
 
-.App-main-container {
-    padding: 10px;
-    flex: 1 0 auto;
+.layout-content {
+    padding: 24px;
 }
 
-.App-main{
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1264px;
-}
-
-.App-task-container{
+.input-container{
     margin: 10px;
-}
-
-.App-footer {
-    text-align: center;
-    font-weight: lighter;
-    padding: 5px;
 }

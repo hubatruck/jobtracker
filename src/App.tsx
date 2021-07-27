@@ -3,6 +3,11 @@ import './App.css';
 import {TaskItem, TaskItemProp} from "./Components/TaskItem";
 import "./Util";
 import {UTIL} from "./Util";
+import {Layout} from "antd";
+import Search from "antd/es/input/Search";
+import {PlusOutlined} from "@ant-design/icons";
+
+const {Header, Content, Footer} = Layout;
 
 type AppState = {
     newTaskText: string;
@@ -97,22 +102,37 @@ class App extends React.Component<any, AppState> {
         }
 
         return (
-            <div className="App">
-                <header className="App-header">JobTracker</header>
-                <div className="App-main-container">
-                    <main className="App-main">
-                        <div className="App-input-container">
-                            <input type="text" value={this.state.newTaskText} placeholder="Type task here..."
-                                   onChange={this.handleInput}/>
-                            <button onClick={this.handleSubmit}>Add</button>
+            <Layout style={{
+                minHeight: '100vh',
+            }}>
+                <Header style={{color:'white'}}>JobTracker</Header>
+                <Content style={{padding:'0 25px'}}>
+                    <div className="layout-content">
+                        <div className="input-container">
+                            <Search
+                                placeholder="Type task here..."
+                                allowClear
+                                enterButton={<PlusOutlined/>}
+                                value={this.state.newTaskText}
+                                onSearch={this.handleSubmit}
+                                onChange={this.handleInput}
+                                style={{width: 400}}
+                            />
                         </div>
                         <div className="App-task-container">
                             {taskListItems}
                         </div>
-                    </main>
-                </div>
-                <footer className="App-footer">&copy; {UTIL.getCopyrightDate()} | hubatruck</footer>
-            </div>
+                    </div>
+                </Content>
+                <Footer style={{
+                    textAlign: 'center',
+                    fontWeight: 'lighter',
+                    padding: 5,
+                }}
+                >
+                    &copy; {UTIL.getCopyrightDate()} | hubatruck
+                </Footer>
+            </Layout>
         );
     }
 }
