@@ -2,6 +2,11 @@
     margin:5px;
 }
 
+.TaskItem-dimmed {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
 .TaskItem-controls {
     display: inline;
     margin: 10px;
@@ -13,13 +18,4 @@
 
 .Task-text{
     display: inline;
-}
-
-.Task-in-progress{
-    font-weight: bolder;
-}
-
-.Task-done{
-    text-decoration: line-through;
-    font-weight: lighter;
 }

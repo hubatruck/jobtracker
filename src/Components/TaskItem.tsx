@@ -16,7 +16,7 @@ export class TaskItem extends React.Component<TaskItemProp> {
     render() {
         const markAsText = 'Mark as ' + ((this.props.done) ? 'un-done' : 'done');
         return (
-            <div className="TaskItem-container">
+            <div className={`TaskItem-container ${this.props.done ? 'TaskItem-dimmed' : ''}`}>
                 <div className="TaskItem-controls">
                     <Tooltip title={markAsText}>
                         <Button
@@ -40,7 +40,7 @@ export class TaskItem extends React.Component<TaskItemProp> {
                         />
                     </Tooltip>
                 </div>
-                <div className={this.props.done ? 'Task-text Task-done' : 'Task-text Task-in-progress'}>
+                <div className="Task-text">
                     {this.props.text}
                 </div>
             </div>
