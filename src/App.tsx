@@ -10,6 +10,7 @@ const {Header, Content, Footer} = Layout;
 
 type Settings = {
     showConfirmDialog: boolean;
+    showActiveTasksFirst: boolean;
 }
 
 type AppState = {
@@ -24,13 +25,17 @@ class App extends React.Component<any, AppState> {
 
         this.state = {
             newTaskText: '',
-            settings: {showConfirmDialog: true},
+            settings: {
+                showConfirmDialog: true,
+                showActiveTasksFirst: false
+            },
             taskListEntries: []
         };
 
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
+        this.handleShowActiveFirst = this.handleShowActiveFirst.bind(this);
     }
 
     /**
@@ -100,27 +105,53 @@ class App extends React.Component<any, AppState> {
     handleShowConfirmChange(value: boolean) {
         const settings = this.state.settings;
         settings.showConfirmDialog = value;
+        this.updateSettings(settings);
+    }
+
+    handleShowActiveFirst(value: boolean) {
+        const settings = this.state.settings;
+        settings.showActiveTasksFirst = value;
+        this.updateSettings(settings);
+    }
+
+    updateSettings(newSettings: Settings) {
         this.setState({
-            settings: settings
+            settings: newSettings
         });
-        localStorage.setItem('settings', JSON.stringify(settings));
+        localStorage.setItem('settings', JSON.stringify(newSettings));
+    }
+
+    createTaskListEntry(item: TaskItemProp) {
+        return (<TaskItem key={item.UUID}
+                          text={item.text}
+                          done={item.done}
+                          UUID={item.UUID}
+                          onDelete={() => this.handleDelete(item)}
+                          onDone={() => this.handleDone(item)}
+                          onEdit={() => this.handleEdit(item)}
+                          visibleConfirm={this.state.settings.showConfirmDialog}
+        />);
     }
 
     render() {
         let taskListItems;
         if (this.state.taskListEntries) {
-            taskListItems = this.state.taskListEntries.map((item) => {
-                return (
-                    <TaskItem key={item.UUID}
-                              text={item.text}
-                              done={item.done}
-                              UUID={item.UUID}
-                              onDelete={() => this.handleDelete(item)}
-                              onDone={() => this.handleDone(item)}
-                              onEdit={() => this.handleEdit(item)}
-                              visibleConfirm={this.state.settings.showConfirmDialog}
-                    />
-                )
+            let tasks = this.state.taskListEntries;
+            if (this.state.settings.showActiveTasksFirst) {
+                let activeTasks: TaskItemProp[] = [], doneTasks: TaskItemProp[] = [];
+                tasks.forEach(task => {
+                    if (task.done) {
+                        doneTasks.push(task);
+                    } else {
+                        activeTasks.push(task);
+                    }
+                });
+
+                tasks = activeTasks.concat(doneTasks);
+            }
+
+            taskListItems = tasks.map((item) => {
+                return this.createTaskListEntry(item);
             });
         }
 
