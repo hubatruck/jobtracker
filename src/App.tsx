@@ -69,6 +69,16 @@ class App extends React.Component<any, AppState> {
         }
     }
 
+    handleEdit(task: TaskItemProp) {
+        const tasks = this.state.taskListEntries.slice();
+        const deletedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
+        if (deletedElIdx >= 0) {
+            tasks.splice(deletedElIdx, 1);
+            this.setState({newTaskText: task.text});
+            this.updateTasks(tasks);
+        }
+    }
+
     handleDone(task: TaskItemProp) {
         const tasks = this.state.taskListEntries.slice();
         const updatedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
@@ -96,6 +106,7 @@ class App extends React.Component<any, AppState> {
                               onDone={() => {
                                   this.handleDone(item);
                               }}
+                              onEdit={() => this.handleEdit(item)}
                     />
                 )
             });

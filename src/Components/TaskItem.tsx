@@ -1,13 +1,14 @@
 import React from "react";
 import './TaskItem.css'
 import {Button, Tooltip} from "antd";
-import {CheckOutlined, CloseOutlined, DeleteOutlined} from "@ant-design/icons";
+import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons";
 
 export type TaskItemProp = {
     text: string;
     done: boolean;
     UUID: string;
     onDone?: any;
+    onEdit?: any;
     onDelete?: any;
 }
 
@@ -22,8 +23,13 @@ export class TaskItem extends React.Component<TaskItemProp> {
                             onClick={this.props.onDone}
                             icon={this.props.done ? <CloseOutlined/> : <CheckOutlined/>}
                             style={{backgroundColor: '#70C040'}}
-                            onClick={this.props.onDone}
-                            icon={this.props.done ? <CloseOutlined/> : <CheckOutlined/>}
+                        />
+                    </Tooltip>
+                    <Tooltip title="Edit task">
+                        <Button
+                            onClick={this.props.onEdit}
+                            icon={<EditOutlined/>}
+                            ghost
                         />
                     </Tooltip>
                     <Tooltip title="Delete task">
