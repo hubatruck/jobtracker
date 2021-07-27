@@ -13,18 +13,25 @@ export type TaskItemProp = {
 }
 
 export class TaskItem extends React.Component<TaskItemProp> {
+    getDoneButton() {
+        const markAsText = 'Mark as ' + ((this.props.done) ? 'active' : 'done');
+        const icon = this.props.done ? <CloseOutlined/> : <CheckOutlined/>;
+        return (
+            <Tooltip title={markAsText}>
+                <Button
+                    onClick={this.props.onDone}
+                    icon={icon}
+                    style={{backgroundColor: '#70C040'}}
+                />
+            </Tooltip>
+        )
+    }
+
     render() {
-        const markAsText = 'Mark as ' + ((this.props.done) ? 'un-done' : 'done');
         return (
             <div className={`TaskItem-container ${this.props.done ? 'TaskItem-dimmed' : ''}`}>
                 <div className="TaskItem-controls">
-                    <Tooltip title={markAsText}>
-                        <Button
-                            onClick={this.props.onDone}
-                            icon={this.props.done ? <CloseOutlined/> : <CheckOutlined/>}
-                            style={{backgroundColor: '#70C040'}}
-                        />
-                    </Tooltip>
+                    {this.getDoneButton()}
                     <Tooltip title="Edit task">
                         <Button
                             onClick={this.props.onEdit}
