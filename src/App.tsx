@@ -179,11 +179,26 @@ class App extends React.Component<any, AppState> {
                     </div>
                     <Collapse>
                         <Collapse.Panel key={1} header="Settings" extra={<SettingOutlined/>}>
-                            Show confirm dialog when deleting&nbsp;
-                            <Switch
-                                onChange={this.handleShowConfirmChange}
-                                checked={this.state.settings.showConfirmDialog}
-                            />
+                            <table className="settings">
+                                <tr>
+                                    <td>Show confirm dialog when deleting</td>
+                                    <td>
+                                        <Switch
+                                            onChange={this.handleShowConfirmChange}
+                                            checked={this.state.settings.showConfirmDialog}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Show active tasks first</td>
+                                    <td>
+                                        <Switch
+                                            onChange={this.handleShowActiveFirst}
+                                            checked={this.state.settings.showActiveTasksFirst}
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
                         </Collapse.Panel>
                     </Collapse>
                 </Content>
