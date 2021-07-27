@@ -1,0 +1,17 @@
+.TaskItem-controls {
+    display: inline;
+    margin: 10px;
+}
+
+.Task-text{
+    display: inline;
+}
+
+.Task-in-progress{
+    font-weight: bolder;
+}
+
+.Task-done{
+    text-decoration: line-through;
+    font-weight: lighter;
+}
