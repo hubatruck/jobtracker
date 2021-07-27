@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import {TaskItem, TaskItemProp} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Layout} from "antd";
+import {Collapse, Layout, Switch} from "antd";
 import Search from "antd/es/input/Search";
-import {PlusOutlined} from "@ant-design/icons";
+import {PlusOutlined, SettingOutlined} from "@ant-design/icons";
 
 const {Header, Content, Footer} = Layout;
 
@@ -144,6 +144,15 @@ class App extends React.Component<any, AppState> {
                             {taskListItems}
                         </div>
                     </div>
+                    <Collapse>
+                        <Collapse.Panel key={1} header="Settings" extra={<SettingOutlined/>}>
+                            Show confirm dialog when deleting&nbsp;
+                            <Switch
+                                onChange={this.handleShowConfirmChange}
+                                checked={this.state.settings.showConfirmDialog}
+                            />
+                        </Collapse.Panel>
+                    </Collapse>
                 </Content>
                 <Footer style={{
                     textAlign: 'center',
