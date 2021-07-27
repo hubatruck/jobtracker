@@ -11,6 +11,7 @@ const {Header, Content, Footer} = Layout;
 type Settings = {
     showConfirmDialog: boolean;
     showActiveTasksFirst: boolean;
+    hideDone: boolean;
 }
 
 type AppState = {
@@ -27,7 +28,8 @@ class App extends React.Component<any, AppState> {
             newTaskText: '',
             settings: {
                 showConfirmDialog: true,
-                showActiveTasksFirst: false
+                showActiveTasksFirst: false,
+                hideDone: false,
             },
             taskListEntries: []
         };
@@ -36,6 +38,7 @@ class App extends React.Component<any, AppState> {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
         this.handleShowActiveFirst = this.handleShowActiveFirst.bind(this);
+        this.handleHideDoneTasks = this.handleHideDoneTasks.bind(this);
     }
 
     /**
@@ -114,6 +117,12 @@ class App extends React.Component<any, AppState> {
         this.updateSettings(settings);
     }
 
+    handleHideDoneTasks(value: boolean) {
+        const settings = this.state.settings;
+        settings.hideDone = value;
+        this.updateSettings(settings);
+    }
+
     updateSettings(newSettings: Settings) {
         this.setState({
             settings: newSettings
@@ -137,7 +146,12 @@ class App extends React.Component<any, AppState> {
         let taskListItems;
         if (this.state.taskListEntries) {
             let tasks = this.state.taskListEntries;
-            if (this.state.settings.showActiveTasksFirst) {
+
+            if (this.state.settings.hideDone) {
+                tasks = tasks.filter(task => {
+                    return !task.done;
+                });
+            } else if (this.state.settings.showActiveTasksFirst) {
                 let activeTasks: TaskItemProp[] = [], doneTasks: TaskItemProp[] = [];
                 tasks.forEach(task => {
                     if (task.done) {
@@ -195,6 +209,15 @@ class App extends React.Component<any, AppState> {
                                         <Switch
                                             onChange={this.handleShowActiveFirst}
                                             checked={this.state.settings.showActiveTasksFirst}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Hide done tasks</td>
+                                    <td>
+                                        <Switch
+                                            onChange={this.handleHideDoneTasks}
+                                            checked={this.state.settings.hideDone}
                                         />
                                     </td>
                                 </tr>
