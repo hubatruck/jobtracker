@@ -10,7 +10,7 @@ export class ShowUrls extends React.Component<ShowUrlsProps> {
     render() {
         let text;
         if (this.props.convertLinks) {
-            const urlRegex = /(http[s]?:\/\/[0-9a-zA-Z]+\.[a-zA-Z0-9]{2,})/;
+            const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_+.~#?&/=]*)/;
             text = sanitizeHtml(this.props.text, {
                 allowedTags: [],
                 allowedAttributes: {},
