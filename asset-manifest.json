@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/jobtracker/static/css/main.e157b95d.chunk.css",
+    "main.js": "/jobtracker/static/js/main.f6756f6e.chunk.js",
+    "main.js.map": "/jobtracker/static/js/main.f6756f6e.chunk.js.map",
+    "runtime-main.js": "/jobtracker/static/js/runtime-main.3439fbb2.js",
+    "runtime-main.js.map": "/jobtracker/static/js/runtime-main.3439fbb2.js.map",
+    "static/css/2.8be76ea1.chunk.css": "/jobtracker/static/css/2.8be76ea1.chunk.css",
+    "static/js/2.5bae42ee.chunk.js": "/jobtracker/static/js/2.5bae42ee.chunk.js",
+    "static/js/2.5bae42ee.chunk.js.map": "/jobtracker/static/js/2.5bae42ee.chunk.js.map",
+    "index.html": "/jobtracker/index.html",
+    "static/css/2.8be76ea1.chunk.css.map": "/jobtracker/static/css/2.8be76ea1.chunk.css.map",
+    "static/css/main.e157b95d.chunk.css.map": "/jobtracker/static/css/main.e157b95d.chunk.css.map",
+    "static/js/2.5bae42ee.chunk.js.LICENSE.txt": "/jobtracker/static/js/2.5bae42ee.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3439fbb2.js",
+    "static/css/2.8be76ea1.chunk.css",
+    "static/js/2.5bae42ee.chunk.js",
+    "static/css/main.e157b95d.chunk.css",
+    "static/js/main.f6756f6e.chunk.js"
+  ]
+}
