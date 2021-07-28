@@ -312,7 +312,7 @@ class App extends React.Component<any, AppState> {
                     fontWeight: 'lighter',
                     padding: 5,
                 }}>
-                    &copy; {UTIL.getCopyrightDate()} | hubatruck
+                    &copy; {UTIL.getCopyrightDate()} | hubatruck | build hash: {process.env.REACT_APP_GIT_SHA}
                 </Footer>
             </Layout>
         );
