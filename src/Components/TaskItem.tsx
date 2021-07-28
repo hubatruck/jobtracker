@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactElement} from "react";
 import './TaskItem.css'
 import {Button, Popconfirm, Tooltip} from "antd";
 import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons";
@@ -20,7 +20,7 @@ export type TaskItemProps = {
 }
 
 export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
-    getDoneButton() {
+    getDoneButton(): ReactElement<typeof Tooltip> {
         const markAsText = 'Mark as ' + ((this.props.active) ? 'completed' : 'active');
         const icon = this.props.active ? <CheckOutlined/> : <CloseOutlined/>;
         return (
@@ -35,7 +35,7 @@ export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     }
 
     /// source: https://codesandbox.io/s/v3yo8
-    handleVisibleChange = (visible: boolean) => {
+    handleVisibleChange = (visible: boolean): void => {
         if (!visible) {
             this.setState({showingConfirm: visible});
             return;
@@ -48,7 +48,7 @@ export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
         }
     }
 
-    render() {
+    render(): ReactElement {
         return (
             <div className={`TaskItem-container ${this.props.active ? '' : 'TaskItem-dimmed'}`}>
                 <div className="TaskItem-controls button-group">

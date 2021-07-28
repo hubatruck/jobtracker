@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
@@ -55,7 +55,7 @@ class App extends React.Component<any, AppState> {
     /**
      * Load data
      */
-    componentDidMount() {
+    componentDidMount(): void {
         const tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify([]));
         const settings = JSON.parse(localStorage.getItem('settings') || JSON.stringify({showConfirmDialog: true}));
         this.setState({taskListEntries: tasks, settings: settings});
@@ -69,18 +69,18 @@ class App extends React.Component<any, AppState> {
         this.updateTasks(tasks);
     }
 
-    handleDeleteAllCompleted() {
+    handleDeleteAllCompleted(): void {
         const tasks = this.state.taskListEntries.filter((task: TaskItemData) => {
             return task.active;
         })
         this.updateTasks(tasks);
     }
 
-    handleInput(event: React.FormEvent<HTMLInputElement>) {
+    handleInput(event: React.FormEvent<HTMLInputElement>): void {
         this.setState({newTaskText: event.currentTarget.value});
     }
 
-    handleSubmit() {
+    handleSubmit(): void {
         const tasks = this.state.taskListEntries.slice();
         const newTask = this.state.newTaskText;
 
@@ -100,7 +100,7 @@ class App extends React.Component<any, AppState> {
         this.updateTasks(tasks);
     }
 
-    handleDelete(task: TaskItemData) {
+    handleDelete(task: TaskItemData): void {
         const tasks = this.state.taskListEntries.slice();
         const deletedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         if (deletedElIdx >= 0) {
@@ -109,7 +109,7 @@ class App extends React.Component<any, AppState> {
         }
     }
 
-    handleEdit(task: TaskItemData) {
+    handleEdit(task: TaskItemData): void {
         const tasks = this.state.taskListEntries.slice();
         const deletedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         if (deletedElIdx >= 0) {
@@ -119,64 +119,65 @@ class App extends React.Component<any, AppState> {
         }
     }
 
-    handleDone(task: TaskItemData) {
+    handleDone(task: TaskItemData): void {
         const tasks = this.state.taskListEntries.slice();
         const updatedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         tasks[updatedElIdx] = {...tasks[updatedElIdx], active: !tasks[updatedElIdx].active};
         this.updateTasks(tasks);
     }
 
-    updateTasks(newTasks: TaskItemData[]) {
-        this.setState({taskListEntries: newTasks});
-        localStorage.setItem('tasks', JSON.stringify(newTasks));
-    }
-
-    handleShowConfirmChange(value: boolean) {
+    handleShowConfirmChange(value: boolean): void {
         const settings = this.state.settings;
         settings.showConfirmDialog = value;
         this.updateSettings(settings);
     }
 
-    handleShowActiveFirst(value: boolean) {
+    handleShowActiveFirst(value: boolean): void {
         const settings = this.state.settings;
         settings.showActiveTasksFirst = value;
         this.updateSettings(settings);
     }
 
-    handleShowCompletedTasks(value: boolean) {
+    handleShowCompletedTasks(value: boolean): void {
         const settings = this.state.settings;
         settings.showCompleted = value;
         this.updateSettings(settings);
     }
 
-    handleClickableLinks(value: boolean) {
+    handleClickableLinks(value: boolean): void {
         const settings = this.state.settings;
         settings.clickableLinks = value;
         this.updateSettings(settings);
     }
 
-    updateSettings(newSettings: Settings) {
+    updateTasks(newTasks: TaskItemData[]): void {
+        this.setState({taskListEntries: newTasks});
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
+    }
+
+    updateSettings(newSettings: Settings): void {
         this.setState({
             settings: newSettings
         });
         localStorage.setItem('settings', JSON.stringify(newSettings));
     }
 
-    createTaskListEntry(item: TaskItemData) {
+    createTaskListEntry(item: TaskItemData): ReactElement<TaskItem> {
         const settings = this.state.settings;
-        return (<TaskItem key={item.UUID}
-                          text={item.text}
-                          active={item.active}
-                          UUID={item.UUID}
-                          onDelete={() => this.handleDelete(item)}
-                          onDone={() => this.handleDone(item)}
-                          onEdit={() => this.handleEdit(item)}
-                          visibleConfirm={settings.showConfirmDialog}
-                          clickableLinks={settings.clickableLinks}
+        return (<TaskItem
+            key={item.UUID}
+            text={item.text}
+            active={item.active}
+            UUID={item.UUID}
+            onDelete={() => this.handleDelete(item)}
+            onDone={() => this.handleDone(item)}
+            onEdit={() => this.handleEdit(item)}
+            visibleConfirm={settings.showConfirmDialog}
+            clickableLinks={settings.clickableLinks}
         />);
     }
 
-    createCustomSwitch(onChangeMethod: any, checkedStateBind: boolean) {
+    createCustomSwitch(onChangeMethod: any, checkedStateBind: boolean): ReactElement<typeof Switch> {
         return (
             <Switch
                 onChange={onChangeMethod}
@@ -197,7 +198,7 @@ class App extends React.Component<any, AppState> {
         return Math.max(this.state.taskListEntries.length - this.activeTaskCount(), 0);
     }
 
-    render() {
+    render():ReactElement {
         let taskListItems;
         if (this.state.taskListEntries) {
             let tasks = this.state.taskListEntries;

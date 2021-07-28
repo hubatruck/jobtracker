@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactElement} from "react";
 import sanitizeHtml from 'sanitize-html';
 
 type ShowUrlsProps = {
@@ -7,7 +7,7 @@ type ShowUrlsProps = {
 }
 
 export class ShowUrls extends React.Component<ShowUrlsProps> {
-    render() {
+    render(): ReactElement {
         let text;
         if (this.props.convertLinks) {
             const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_+.~#?&/=]*)/;
