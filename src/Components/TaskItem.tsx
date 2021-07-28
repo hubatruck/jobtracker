@@ -51,7 +51,7 @@ export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     render() {
         return (
             <div className={`TaskItem-container ${this.props.done ? 'TaskItem-dimmed' : ''}`}>
-                <div className="TaskItem-controls">
+                <div className="TaskItem-controls  button-group">
                     {this.getDoneButton()}
                     <Tooltip title="Edit task">
                         <Button
