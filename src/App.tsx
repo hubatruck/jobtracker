@@ -11,14 +11,14 @@ const {Header, Content, Footer} = Layout;
 type Settings = {
     showConfirmDialog: boolean;
     showActiveTasksFirst: boolean;
-    hideDone: boolean;
+    showCompleted: boolean;
     clickableLinks: boolean;
 }
 
 type TaskItemData = {
     text: string;
     UUID: string;
-    done: boolean;
+    active: boolean;
 }
 
 type AppState = {
@@ -36,19 +36,19 @@ class App extends React.Component<any, AppState> {
             settings: {
                 showConfirmDialog: true,
                 showActiveTasksFirst: false,
-                hideDone: false,
+                showCompleted: true,
                 clickableLinks: true,
             },
             taskListEntries: []
         };
 
         this.handleMarkAllDone = this.handleMarkAllDone.bind(this);
-        this.handleDeleteAllDone = this.handleDeleteAllDone.bind(this);
+        this.handleDeleteAllCompleted = this.handleDeleteAllCompleted.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
         this.handleShowActiveFirst = this.handleShowActiveFirst.bind(this);
-        this.handleHideDoneTasks = this.handleHideDoneTasks.bind(this);
+        this.handleShowCompletedTasks = this.handleShowCompletedTasks.bind(this);
         this.handleClickableLinks = this.handleClickableLinks.bind(this);
     }
 
@@ -63,15 +63,15 @@ class App extends React.Component<any, AppState> {
 
     handleMarkAllDone(): void {
         const tasks = this.state.taskListEntries.map((task: TaskItemData) => {
-            task.done = true;
+            task.active = false;
             return task;
         });
         this.updateTasks(tasks);
     }
 
-    handleDeleteAllDone() {
+    handleDeleteAllCompleted() {
         const tasks = this.state.taskListEntries.filter((task: TaskItemData) => {
-            return !task.done;
+            return task.active;
         })
         this.updateTasks(tasks);
     }
@@ -91,7 +91,7 @@ class App extends React.Component<any, AppState> {
         tasks.push({
             text: this.state.newTaskText,
             UUID: Date.now().toString() + '_' + UTIL.randomHex(),
-            done: false,
+            active: true,
         });
 
         this.setState({
@@ -122,7 +122,7 @@ class App extends React.Component<any, AppState> {
     handleDone(task: TaskItemData) {
         const tasks = this.state.taskListEntries.slice();
         const updatedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
-        tasks[updatedElIdx] = {...tasks[updatedElIdx], done: !tasks[updatedElIdx].done};
+        tasks[updatedElIdx] = {...tasks[updatedElIdx], active: !tasks[updatedElIdx].active};
         this.updateTasks(tasks);
     }
 
@@ -143,9 +143,9 @@ class App extends React.Component<any, AppState> {
         this.updateSettings(settings);
     }
 
-    handleHideDoneTasks(value: boolean) {
+    handleShowCompletedTasks(value: boolean) {
         const settings = this.state.settings;
-        settings.hideDone = value;
+        settings.showCompleted = value;
         this.updateSettings(settings);
     }
 
@@ -166,7 +166,7 @@ class App extends React.Component<any, AppState> {
         const settings = this.state.settings;
         return (<TaskItem key={item.UUID}
                           text={item.text}
-                          done={item.done}
+                          active={item.active}
                           UUID={item.UUID}
                           onDelete={() => this.handleDelete(item)}
                           onDone={() => this.handleDone(item)}
@@ -189,7 +189,7 @@ class App extends React.Component<any, AppState> {
 
     activeTaskCount(): number {
         return this.state.taskListEntries.filter((task: TaskItemData) => {
-            return !task.done;
+            return task.active;
         }).length;
     }
 
@@ -202,21 +202,17 @@ class App extends React.Component<any, AppState> {
         if (this.state.taskListEntries) {
             let tasks = this.state.taskListEntries;
 
-            if (this.state.settings.hideDone) {
+            if (!this.state.settings.showCompleted) {
                 tasks = tasks.filter(task => {
-                    return !task.done;
+                    return task.active;
                 });
             } else if (this.state.settings.showActiveTasksFirst) {
-                let activeTasks: TaskItemData[] = [], doneTasks: TaskItemData[] = [];
+                let activeTasks: TaskItemData[] = [], completedTasks: TaskItemData[] = [];
                 tasks.forEach(task => {
-                    if (task.done) {
-                        doneTasks.push(task);
-                    } else {
-                        activeTasks.push(task);
-                    }
+                    task.active ? activeTasks.push(task) : completedTasks.push(task);
                 });
 
-                tasks = activeTasks.concat(doneTasks);
+                tasks = activeTasks.concat(completedTasks);
             }
 
             taskListItems = tasks.map((item: TaskItemData) => {
@@ -244,7 +240,7 @@ class App extends React.Component<any, AppState> {
                                         title="Are you sure? This cannot be undone."
                                         okText="Yes"
                                         cancelText="Nah"
-                                        onConfirm={this.handleDeleteAllDone}
+                                        onConfirm={this.handleDeleteAllCompleted}
                                         placement="bottom"
                                         disabled={!this.finishedTaskCount()}
                                     >
@@ -292,9 +288,9 @@ class App extends React.Component<any, AppState> {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Hide completed tasks</td>
+                                        <td>Show completed tasks</td>
                                         <td>
-                                            {this.createCustomSwitch(this.handleHideDoneTasks, this.state.settings.hideDone)}
+                                            {this.createCustomSwitch(this.handleShowCompletedTasks, this.state.settings.showCompleted)}
                                         </td>
                                     </tr>
                                     <tr>

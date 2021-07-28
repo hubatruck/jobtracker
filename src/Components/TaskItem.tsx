@@ -10,7 +10,7 @@ type TaskItemState = {
 
 export type TaskItemProps = {
     text: string;
-    done: boolean;
+    active: boolean;
     UUID: string;
     onDone: any;
     onEdit: any;
@@ -21,8 +21,8 @@ export type TaskItemProps = {
 
 export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     getDoneButton() {
-        const markAsText = 'Mark as ' + ((this.props.done) ? 'active' : 'done');
-        const icon = this.props.done ? <CloseOutlined/> : <CheckOutlined/>;
+        const markAsText = 'Mark as ' + ((this.props.active) ? 'completed' : 'active');
+        const icon = this.props.active ? <CheckOutlined/> : <CloseOutlined/>;
         return (
             <Tooltip title={markAsText}>
                 <Button
@@ -50,8 +50,8 @@ export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 
     render() {
         return (
-            <div className={`TaskItem-container ${this.props.done ? 'TaskItem-dimmed' : ''}`}>
-                <div className="TaskItem-controls  button-group">
+            <div className={`TaskItem-container ${this.props.active ? '' : 'TaskItem-dimmed'}`}>
+                <div className="TaskItem-controls button-group">
                     {this.getDoneButton()}
                     <Tooltip title="Edit task">
                         <Button
