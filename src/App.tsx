@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Layout, Switch, Tabs} from "antd";
+import {Button, Layout, Switch, Tabs} from "antd";
 import Search from "antd/es/input/Search";
 import {CheckOutlined, CloseOutlined, HomeOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
 
@@ -42,6 +42,7 @@ class App extends React.Component<any, AppState> {
             taskListEntries: []
         };
 
+        this.handleMarkAllDone = this.handleMarkAllDone.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
@@ -57,6 +58,14 @@ class App extends React.Component<any, AppState> {
         const tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify([]));
         const settings = JSON.parse(localStorage.getItem('settings') || JSON.stringify({showConfirmDialog: true}));
         this.setState({taskListEntries: tasks, settings: settings});
+    }
+
+    handleMarkAllDone(): void {
+        const tasks = this.state.taskListEntries.map((task: TaskItemData) => {
+            task.done = true;
+            return task;
+        });
+        this.updateTasks(tasks);
     }
 
     handleInput(event: React.FormEvent<HTMLInputElement>) {
@@ -170,6 +179,12 @@ class App extends React.Component<any, AppState> {
         );
     }
 
+    activeTaskCount(): number {
+        return this.state.taskListEntries.filter((task: TaskItemData) => {
+            return !task.done;
+        }).length;
+    }
+
     render() {
         let taskListItems;
         if (this.state.taskListEntries) {
@@ -206,6 +221,14 @@ class App extends React.Component<any, AppState> {
                     <div className="layout-content">
                         <Tabs defaultActiveKey="1" type="card">
                             <Tabs.TabPane tab={<span><HomeOutlined/> Home</span>} key="1">
+                                <div className="button-group">
+                                    <Button
+                                        onClick={this.handleMarkAllDone}
+                                        disabled={!this.activeTaskCount()}
+                                    >
+                                        Mark all done
+                                    </Button>
+                                </div>
                                 <div className="input-container">
                                     <Search
                                         placeholder="Type task here..."
