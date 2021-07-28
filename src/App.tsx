@@ -198,7 +198,7 @@ class App extends React.Component<any, AppState> {
         return Math.max(this.state.taskListEntries.length - this.activeTaskCount(), 0);
     }
 
-    render():ReactElement {
+    render(): ReactElement {
         let taskListItems;
         if (this.state.taskListEntries) {
             let tasks = this.state.taskListEntries;
@@ -235,7 +235,7 @@ class App extends React.Component<any, AppState> {
                                         onClick={this.handleMarkAllDone}
                                         disabled={!this.activeTaskCount()}
                                     >
-                                        Mark all done
+                                        Mark all as completed
                                     </Button>
                                     <Popconfirm
                                         title="Are you sure? This cannot be undone."
@@ -248,7 +248,7 @@ class App extends React.Component<any, AppState> {
                                         <Button
                                             danger
                                             disabled={!this.finishedTaskCount()}
-                                        >Clear all done tasks</Button>
+                                        >Clear completed tasks</Button>
                                     </Popconfirm>
                                 </div>
                                 <div className="input-container">
@@ -271,7 +271,7 @@ class App extends React.Component<any, AppState> {
                                 <table className="settings">
                                     <thead>
                                     <tr>
-                                        <th> Action name</th>
+                                        <th>Action name</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -311,8 +311,7 @@ class App extends React.Component<any, AppState> {
                     textAlign: 'center',
                     fontWeight: 'lighter',
                     padding: 5,
-                }}
-                >
+                }}>
                     &copy; {UTIL.getCopyrightDate()} | hubatruck
                 </Footer>
             </Layout>
