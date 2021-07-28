@@ -60,6 +60,9 @@ For all those weirdos who actually put their app in *production* state, you can 
 $ npm run build
 ```
 
+**Note**: The project is built assuming it gets hosted at `/jobtracker/`. You can change this by editing the `homepage`
+field in `package.json`.
+
 #### Deploying
 
 If you want to deploy the app to a web server on the current machine, make sure the `REACT_APP_REDIRECT_DAEMON_URL`
