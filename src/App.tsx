@@ -12,6 +12,7 @@ type Settings = {
     showConfirmDialog: boolean;
     showActiveTasksFirst: boolean;
     hideDone: boolean;
+    clickableLinks: boolean;
 }
 
 type TaskItemData = {
@@ -36,6 +37,7 @@ class App extends React.Component<any, AppState> {
                 showConfirmDialog: true,
                 showActiveTasksFirst: false,
                 hideDone: false,
+                clickableLinks: true,
             },
             taskListEntries: []
         };
@@ -45,6 +47,7 @@ class App extends React.Component<any, AppState> {
         this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
         this.handleShowActiveFirst = this.handleShowActiveFirst.bind(this);
         this.handleHideDoneTasks = this.handleHideDoneTasks.bind(this);
+        this.handleClickableLinks = this.handleClickableLinks.bind(this);
     }
 
     /**
@@ -129,6 +132,12 @@ class App extends React.Component<any, AppState> {
         this.updateSettings(settings);
     }
 
+    handleClickableLinks(value: boolean) {
+        const settings = this.state.settings;
+        settings.clickableLinks = value;
+        this.updateSettings(settings);
+    }
+
     updateSettings(newSettings: Settings) {
         this.setState({
             settings: newSettings
@@ -137,6 +146,7 @@ class App extends React.Component<any, AppState> {
     }
 
     createTaskListEntry(item: TaskItemData) {
+        const settings = this.state.settings;
         return (<TaskItem key={item.UUID}
                           text={item.text}
                           done={item.done}
@@ -144,7 +154,8 @@ class App extends React.Component<any, AppState> {
                           onDelete={() => this.handleDelete(item)}
                           onDone={() => this.handleDone(item)}
                           onEdit={() => this.handleEdit(item)}
-                          visibleConfirm={this.state.settings.showConfirmDialog}
+                          visibleConfirm={settings.showConfirmDialog}
+                          clickableLinks={settings.clickableLinks}
         />);
     }
 
@@ -213,10 +224,13 @@ class App extends React.Component<any, AppState> {
                             <Tabs.TabPane tab={<span><SettingOutlined/>Settings</span>} key="2">
                                 <h3>Here you can change the behaviour of the application</h3>
                                 <table className="settings">
+                                    <thead>
                                     <tr>
                                         <th> Action name</th>
                                         <th>Status</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
                                     <tr>
                                         <td>Show confirm dialog when deleting</td>
                                         <td>
@@ -235,6 +249,13 @@ class App extends React.Component<any, AppState> {
                                             {this.createCustomSwitch(this.handleHideDoneTasks, this.state.settings.hideDone)}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>Make URLs clickable</td>
+                                        <td>
+                                            {this.createCustomSwitch(this.handleClickableLinks, this.state.settings.clickableLinks)}
+                                        </td>
+                                    </tr>
+                                    </tbody>
                                 </table>
                             </Tabs.TabPane>
                         </Tabs>

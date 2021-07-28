@@ -2,22 +2,24 @@ import React from "react";
 import './TaskItem.css'
 import {Button, Popconfirm, Tooltip} from "antd";
 import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {ShowUrls} from "./ShowUrls";
 
 type TaskItemState = {
     showingConfirm: boolean,
 }
 
-export type TaskItemProp = {
+export type TaskItemProps = {
     text: string;
     done: boolean;
     UUID: string;
-    onDone?: any;
-    onEdit?: any;
-    onDelete?: any;
-    visibleConfirm?: boolean;
+    onDone: any;
+    onEdit: any;
+    onDelete: any;
+    visibleConfirm: boolean;
+    clickableLinks: boolean;
 }
 
-export class TaskItem extends React.Component<TaskItemProp, TaskItemState> {
+export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     getDoneButton() {
         const markAsText = 'Mark as ' + ((this.props.done) ? 'active' : 'done');
         const icon = this.props.done ? <CloseOutlined/> : <CheckOutlined/>;
@@ -73,7 +75,7 @@ export class TaskItem extends React.Component<TaskItemProp, TaskItemState> {
                     </Popconfirm>
                 </div>
                 <div className="Task-text">
-                    {this.props.text}
+                    <ShowUrls text={this.props.text} convertLinks={this.props.clickableLinks}/>
                 </div>
             </div>
         )
