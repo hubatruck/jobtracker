@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Button, Layout, Switch, Tabs} from "antd";
+import {Button, Layout, Popconfirm, Switch, Tabs} from "antd";
 import Search from "antd/es/input/Search";
 import {CheckOutlined, CloseOutlined, HomeOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
 
@@ -43,6 +43,7 @@ class App extends React.Component<any, AppState> {
         };
 
         this.handleMarkAllDone = this.handleMarkAllDone.bind(this);
+        this.handleDeleteAllDone = this.handleDeleteAllDone.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
@@ -65,6 +66,13 @@ class App extends React.Component<any, AppState> {
             task.done = true;
             return task;
         });
+        this.updateTasks(tasks);
+    }
+
+    handleDeleteAllDone() {
+        const tasks = this.state.taskListEntries.filter((task: TaskItemData) => {
+            return !task.done;
+        })
         this.updateTasks(tasks);
     }
 
@@ -185,6 +193,10 @@ class App extends React.Component<any, AppState> {
         }).length;
     }
 
+    finishedTaskCount(): number {
+        return Math.max(this.state.taskListEntries.length - this.activeTaskCount(), 0);
+    }
+
     render() {
         let taskListItems;
         if (this.state.taskListEntries) {
@@ -228,6 +240,19 @@ class App extends React.Component<any, AppState> {
                                     >
                                         Mark all done
                                     </Button>
+                                    <Popconfirm
+                                        title="Are you sure? This cannot be undone."
+                                        okText="Yes"
+                                        cancelText="Nah"
+                                        onConfirm={this.handleDeleteAllDone}
+                                        placement="bottom"
+                                        disabled={!this.finishedTaskCount()}
+                                    >
+                                        <Button
+                                            danger
+                                            disabled={!this.finishedTaskCount()}
+                                        >Clear all done tasks</Button>
+                                    </Popconfirm>
                                 </div>
                                 <div className="input-container">
                                     <Search
