@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {TaskItem, TaskItemProp} from "./Components/TaskItem";
+import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
 import {Layout, Switch, Tabs} from "antd";
 import Search from "antd/es/input/Search";
@@ -14,9 +14,15 @@ type Settings = {
     hideDone: boolean;
 }
 
+type TaskItemData = {
+    text: string;
+    UUID: string;
+    done: boolean;
+}
+
 type AppState = {
     newTaskText: string;
-    taskListEntries: TaskItemProp[];
+    taskListEntries: TaskItemData[];
     settings: Settings;
 }
 
@@ -74,7 +80,7 @@ class App extends React.Component<any, AppState> {
         this.updateTasks(tasks);
     }
 
-    handleDelete(task: TaskItemProp) {
+    handleDelete(task: TaskItemData) {
         const tasks = this.state.taskListEntries.slice();
         const deletedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         if (deletedElIdx >= 0) {
@@ -83,7 +89,7 @@ class App extends React.Component<any, AppState> {
         }
     }
 
-    handleEdit(task: TaskItemProp) {
+    handleEdit(task: TaskItemData) {
         const tasks = this.state.taskListEntries.slice();
         const deletedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         if (deletedElIdx >= 0) {
@@ -93,14 +99,14 @@ class App extends React.Component<any, AppState> {
         }
     }
 
-    handleDone(task: TaskItemProp) {
+    handleDone(task: TaskItemData) {
         const tasks = this.state.taskListEntries.slice();
         const updatedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         tasks[updatedElIdx] = {...tasks[updatedElIdx], done: !tasks[updatedElIdx].done};
         this.updateTasks(tasks);
     }
 
-    updateTasks(newTasks: TaskItemProp[]) {
+    updateTasks(newTasks: TaskItemData[]) {
         this.setState({taskListEntries: newTasks});
         localStorage.setItem('tasks', JSON.stringify(newTasks));
     }
@@ -130,7 +136,7 @@ class App extends React.Component<any, AppState> {
         localStorage.setItem('settings', JSON.stringify(newSettings));
     }
 
-    createTaskListEntry(item: TaskItemProp) {
+    createTaskListEntry(item: TaskItemData) {
         return (<TaskItem key={item.UUID}
                           text={item.text}
                           done={item.done}
@@ -163,7 +169,7 @@ class App extends React.Component<any, AppState> {
                     return !task.done;
                 });
             } else if (this.state.settings.showActiveTasksFirst) {
-                let activeTasks: TaskItemProp[] = [], doneTasks: TaskItemProp[] = [];
+                let activeTasks: TaskItemData[] = [], doneTasks: TaskItemData[] = [];
                 tasks.forEach(task => {
                     if (task.done) {
                         doneTasks.push(task);
@@ -175,7 +181,7 @@ class App extends React.Component<any, AppState> {
                 tasks = activeTasks.concat(doneTasks);
             }
 
-            taskListItems = tasks.map((item) => {
+            taskListItems = tasks.map((item: TaskItemData) => {
                 return this.createTaskListEntry(item);
             });
         }
