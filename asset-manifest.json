@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/jobtracker/static/css/main.6ea62834.chunk.css",
-    "main.js": "/jobtracker/static/js/main.87305c1c.chunk.js",
-    "main.js.map": "/jobtracker/static/js/main.87305c1c.chunk.js.map",
+    "main.css": "/jobtracker/static/css/main.d64cd103.chunk.css",
+    "main.js": "/jobtracker/static/js/main.2a26500c.chunk.js",
+    "main.js.map": "/jobtracker/static/js/main.2a26500c.chunk.js.map",
     "runtime-main.js": "/jobtracker/static/js/runtime-main.3439fbb2.js",
     "runtime-main.js.map": "/jobtracker/static/js/runtime-main.3439fbb2.js.map",
     "static/css/2.8be76ea1.chunk.css": "/jobtracker/static/css/2.8be76ea1.chunk.css",
-    "static/js/2.683b82fc.chunk.js": "/jobtracker/static/js/2.683b82fc.chunk.js",
-    "static/js/2.683b82fc.chunk.js.map": "/jobtracker/static/js/2.683b82fc.chunk.js.map",
+    "static/js/2.2cfd2720.chunk.js": "/jobtracker/static/js/2.2cfd2720.chunk.js",
+    "static/js/2.2cfd2720.chunk.js.map": "/jobtracker/static/js/2.2cfd2720.chunk.js.map",
     "index.html": "/jobtracker/index.html",
     "static/css/2.8be76ea1.chunk.css.map": "/jobtracker/static/css/2.8be76ea1.chunk.css.map",
-    "static/css/main.6ea62834.chunk.css.map": "/jobtracker/static/css/main.6ea62834.chunk.css.map",
-    "static/js/2.683b82fc.chunk.js.LICENSE.txt": "/jobtracker/static/js/2.683b82fc.chunk.js.LICENSE.txt"
+    "static/css/main.d64cd103.chunk.css.map": "/jobtracker/static/css/main.d64cd103.chunk.css.map",
+    "static/js/2.2cfd2720.chunk.js.LICENSE.txt": "/jobtracker/static/js/2.2cfd2720.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3439fbb2.js",
     "static/css/2.8be76ea1.chunk.css",
-    "static/js/2.683b82fc.chunk.js",
-    "static/css/main.6ea62834.chunk.css",
-    "static/js/main.87305c1c.chunk.js"
+    "static/js/2.2cfd2720.chunk.js",
+    "static/css/main.d64cd103.chunk.css",
+    "static/js/main.2a26500c.chunk.js"
   ]
 }
