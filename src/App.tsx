@@ -2,7 +2,7 @@ import React, {ChangeEvent, ReactElement} from 'react';
 import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Button, Input, Layout, Popconfirm, Switch, Tabs} from "antd";
+import {Button, Input, Layout, message, Popconfirm, Switch, Tabs} from "antd";
 import {
     CheckOutlined,
     ClearOutlined,
@@ -59,6 +59,11 @@ class App extends React.Component<any, AppState> {
         this.handleShowActiveFirst = this.handleShowActiveFirst.bind(this);
         this.handleShowCompletedTasks = this.handleShowCompletedTasks.bind(this);
         this.handleClickableLinks = this.handleClickableLinks.bind(this);
+
+        message.config({
+            maxCount: 2,
+            duration: 3
+        });
     }
 
     /**
@@ -76,6 +81,8 @@ class App extends React.Component<any, AppState> {
             return task;
         });
         this.updateTasks(tasks);
+        message.info("All tasks marked completed!").then(() => {
+        });
     }
 
     handleDeleteAllCompleted(): void {
@@ -83,6 +90,8 @@ class App extends React.Component<any, AppState> {
             return task.active;
         })
         this.updateTasks(tasks);
+        message.info("Cleared completed tasks!").then(() => {
+        });
     }
 
     handleInput(event: ChangeEvent<HTMLTextAreaElement>): void {
@@ -107,6 +116,8 @@ class App extends React.Component<any, AppState> {
             newTaskText: '',
         });
         this.updateTasks(tasks);
+        message.success("Task created!").then(() => {
+        });
     }
 
     handleDelete(task: TaskItemData): void {
@@ -116,6 +127,8 @@ class App extends React.Component<any, AppState> {
             tasks.splice(deletedElIdx, 1);
             this.updateTasks(tasks);
         }
+        message.info("Task deleted successfully").then(() => {
+        });
     }
 
     handleEdit(task: TaskItemData): void {
@@ -169,6 +182,8 @@ class App extends React.Component<any, AppState> {
             settings: newSettings
         });
         localStorage.setItem('settings', JSON.stringify(newSettings));
+        message.info('Settings updated!', 1).then(() => {
+        });
     }
 
     createTaskListEntry(item: TaskItemData): ReactElement<TaskItem> {
