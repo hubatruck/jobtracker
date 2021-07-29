@@ -2,28 +2,15 @@ import React, {ReactElement} from 'react';
 import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Button, Layout, message, Popconfirm, Switch, Tabs} from "antd";
-import {
-    CheckOutlined,
-    ClearOutlined,
-    CloseOutlined,
-    HomeOutlined,
-    SettingOutlined,
-    ThunderboltOutlined
-} from "@ant-design/icons";
+import {Button, Layout, message, Popconfirm, Tabs} from "antd";
+import {ClearOutlined, HomeOutlined, SettingOutlined, ThunderboltOutlined} from "@ant-design/icons";
 import {WidthLimitedContainer} from "./Components/WidthLimitedContainer";
 import {version} from '../package.json';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import TaskInput from "./Components/TaskInput";
+import {ISettings, SettingsPage} from "./Pages/SettingsPage";
 
 const {Header, Content, Footer} = Layout;
-
-type Settings = {
-    showConfirmDialog: boolean;
-    showActiveTasksFirst: boolean;
-    showCompleted: boolean;
-    clickableLinks: boolean;
-}
 
 type TaskItemData = {
     text: string;
@@ -34,7 +21,7 @@ type TaskItemData = {
 type AppState = {
     newTaskText: string;
     taskListEntries: TaskItemData[];
-    settings: Settings;
+    settings: ISettings;
 }
 
 class App extends React.Component<any, AppState> {
@@ -145,36 +132,12 @@ class App extends React.Component<any, AppState> {
         });
     }
 
-    handleShowConfirmChange(value: boolean): void {
-        const settings = this.state.settings;
-        settings.showConfirmDialog = value;
-        this.updateSettings(settings);
-    }
-
-    handleShowActiveFirst(value: boolean): void {
-        const settings = this.state.settings;
-        settings.showActiveTasksFirst = value;
-        this.updateSettings(settings);
-    }
-
-    handleShowCompletedTasks(value: boolean): void {
-        const settings = this.state.settings;
-        settings.showCompleted = value;
-        this.updateSettings(settings);
-    }
-
-    handleClickableLinks(value: boolean): void {
-        const settings = this.state.settings;
-        settings.clickableLinks = value;
-        this.updateSettings(settings);
-    }
-
     updateTasks(newTasks: TaskItemData[], callback?: (() => void)): void {
         this.setState({taskListEntries: newTasks}, callback);
         localStorage.setItem('tasks', JSON.stringify(newTasks));
     }
 
-    updateSettings(newSettings: Settings): void {
+    updateSettings(newSettings: ISettings): void {
         this.setState({
             settings: newSettings
         });
@@ -196,17 +159,6 @@ class App extends React.Component<any, AppState> {
             visibleConfirm={settings.showConfirmDialog}
             clickableLinks={settings.clickableLinks}
         />);
-    }
-
-    createCustomSwitch(onChangeMethod: any, checkedStateBind: boolean): ReactElement<typeof Switch> {
-        return (
-            <Switch
-                onChange={onChangeMethod}
-                checked={checkedStateBind}
-                checkedChildren={<CheckOutlined/>}
-                unCheckedChildren={<CloseOutlined/>}
-            />
-        );
     }
 
     activeTaskCount(): number {
@@ -286,41 +238,10 @@ class App extends React.Component<any, AppState> {
                                 </div>
                             </Tabs.TabPane>
                             <Tabs.TabPane tab={<span><SettingOutlined/>Settings</span>} key="2">
-                                <h3>Here you can change the behaviour of the application</h3>
-                                <table className="settings">
-                                    <thead>
-                                    <tr>
-                                        <th>Action name</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Show confirm dialog when deleting</td>
-                                        <td>
-                                            {this.createCustomSwitch(this.handleShowConfirmChange.bind(this), this.state.settings.showConfirmDialog)}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Show active tasks first</td>
-                                        <td>
-                                            {this.createCustomSwitch(this.handleShowActiveFirst.bind(this), this.state.settings.showActiveTasksFirst)}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Show completed tasks</td>
-                                        <td>
-                                            {this.createCustomSwitch(this.handleShowCompletedTasks.bind(this), this.state.settings.showCompleted)}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Make URLs clickable</td>
-                                        <td>
-                                            {this.createCustomSwitch(this.handleClickableLinks.bind(this), this.state.settings.clickableLinks)}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <SettingsPage
+                                    settings={{...this.state.settings}}
+                                    onSettingUpdate={this.updateSettings.bind(this)}
+                                />
                             </Tabs.TabPane>
                         </Tabs>
                     </WidthLimitedContainer>
