@@ -21,39 +21,19 @@ export class SettingsPage extends React.Component<SettingsProps, ISettings> {
         this.state = {...this.props.settings}
     }
 
-    createCustomSwitch(onChangeMethod: any, checkedStateBind: boolean): ReactElement<typeof Switch> {
+    createCustomSwitch(settingName: string): ReactElement<typeof Switch> {
+        if (Object.keys(this.state).filter(key => key === settingName).length === 0) {
+            throw Error(`Unknown setting key '${settingName}'. Did you misspell it?`);
+        }
         return (
             <Switch
-                onChange={onChangeMethod}
-                checked={checkedStateBind}
+                onChange={(value: boolean) => this.updateSettings(settingName, value)}
+                /// key hack: https://stackoverflow.com/a/64217699
+                checked={this.state[settingName as keyof ISettings]}
                 checkedChildren={<CheckOutlined/>}
                 unCheckedChildren={<CloseOutlined/>}
             />
         );
-    }
-
-    handleShowConfirmChange(value: boolean): void {
-        const settings = this.props.settings;
-        settings.showConfirmDialog = value;
-        this.props.onSettingUpdate(settings);
-    }
-
-    handleShowActiveFirst(value: boolean): void {
-        const settings = this.props.settings;
-        settings.showActiveTasksFirst = value;
-        this.props.onSettingUpdate(settings);
-    }
-
-    handleShowCompletedTasks(value: boolean): void {
-        const settings = this.props.settings;
-        settings.showCompleted = value;
-        this.props.onSettingUpdate(settings);
-    }
-
-    handleClickableLinks(value: boolean): void {
-        const settings =  this.props.settings;
-        settings.clickableLinks = value;
-        this.props.onSettingUpdate(settings);
     }
 
     render() {
@@ -71,30 +51,35 @@ export class SettingsPage extends React.Component<SettingsProps, ISettings> {
                     <tr>
                         <td>Show confirm dialog when deleting</td>
                         <td>
-                            {this.createCustomSwitch(this.handleShowConfirmChange.bind(this), this.props.settings.showConfirmDialog)}
+                            {this.createCustomSwitch('showConfirmDialog')}
                         </td>
                     </tr>
                     <tr>
                         <td>Show active tasks first</td>
                         <td>
-                            {this.createCustomSwitch(this.handleShowActiveFirst.bind(this), this.props.settings.showActiveTasksFirst)}
+                            {this.createCustomSwitch('showActiveTasksFirst')}
                         </td>
                     </tr>
                     <tr>
                         <td>Show completed tasks</td>
                         <td>
-                            {this.createCustomSwitch(this.handleShowCompletedTasks.bind(this), this.props.settings.showCompleted)}
+                            {this.createCustomSwitch('showCompleted')}
                         </td>
                     </tr>
                     <tr>
                         <td>Make URLs clickable</td>
                         <td>
-                            {this.createCustomSwitch(this.handleClickableLinks.bind(this), this.props.settings.clickableLinks)}
+                            {this.createCustomSwitch('clickableLinks')}
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         )
+    }
+
+    private updateSettings(itemName: string, itemValue: boolean): void {
+        const settings = {...this.props.settings, [itemName]: itemValue};
+        this.props.onSettingUpdate(settings);
     }
 }
