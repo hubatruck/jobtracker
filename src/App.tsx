@@ -1,20 +1,20 @@
-import React, {ChangeEvent, ReactElement} from 'react';
+import React, {ReactElement} from 'react';
 import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Button, Input, Layout, message, Popconfirm, Switch, Tabs} from "antd";
+import {Button, Layout, message, Popconfirm, Switch, Tabs} from "antd";
 import {
     CheckOutlined,
     ClearOutlined,
     CloseOutlined,
     HomeOutlined,
-    PlusOutlined,
     SettingOutlined,
     ThunderboltOutlined
 } from "@ant-design/icons";
 import {WidthLimitedContainer} from "./Components/WidthLimitedContainer";
 import {version} from '../package.json';
 import scrollIntoView from 'scroll-into-view-if-needed';
+import TaskInput from "./Components/TaskInput";
 
 const {Header, Content, Footer} = Layout;
 
@@ -54,7 +54,6 @@ class App extends React.Component<any, AppState> {
 
         this.handleMarkAllDone = this.handleMarkAllDone.bind(this);
         this.handleDeleteAllCompleted = this.handleDeleteAllCompleted.bind(this);
-        this.handleInput = this.handleInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
         this.handleShowActiveFirst = this.handleShowActiveFirst.bind(this);
@@ -95,20 +94,16 @@ class App extends React.Component<any, AppState> {
         });
     }
 
-    handleInput(event: ChangeEvent<HTMLTextAreaElement>): void {
-        this.setState({newTaskText: event.currentTarget.value});
-    }
-
-    handleSubmit(): void {
+    handleSubmit(submittedValues: { taskName: string }): void {
         const tasks = this.state.taskListEntries.slice();
-        const newTask = this.state.newTaskText;
+        const newTask = submittedValues.taskName;
 
         if (!newTask) {
             return;
         }
 
         tasks.push({
-            text: this.state.newTaskText,
+            text: newTask,
             UUID: Date.now().toString() + '_' + UTIL.randomHex(),
             active: true,
         });
@@ -267,22 +262,10 @@ class App extends React.Component<any, AppState> {
                         <Tabs defaultActiveKey="1" type="card">
                             <Tabs.TabPane tab={<span><HomeOutlined/> Home</span>} key="1">
                                 <div className="input-container">
-                                    <Input.TextArea
-                                        placeholder="Type task here..."
-                                        allowClear
-                                        value={this.state.newTaskText}
-                                        style={{width: 400}}
-                                        autoSize={{minRows: 2}}
-                                        showCount
-                                        maxLength={2000}
-                                        onChange={this.handleInput}
+                                    <TaskInput
+                                        onSubmit={this.handleSubmit}
+                                        clearOnSubmit={true}
                                     />
-                                    <Button
-                                        type="primary"
-                                        onClick={this.handleSubmit}
-                                        icon={<PlusOutlined/>}
-                                        style={{marginTop: "5px"}}
-                                    > Add </Button>
                                 </div>
                                 <hr/>
                                 <div className="button-group">
