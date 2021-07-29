@@ -149,10 +149,13 @@ class App extends React.Component<any, AppState> {
     }
 
     handleDone(task: TaskItemData): void {
+        const fromTopX = window.scrollX, fromTopY = window.scrollY;
         const tasks = this.state.taskListEntries.slice();
         const updatedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         tasks[updatedElIdx] = {...tasks[updatedElIdx], active: !tasks[updatedElIdx].active};
-        this.updateTasks(tasks);
+        this.updateTasks(tasks, () => {
+            window.scrollTo(fromTopX, fromTopY);
+        });
     }
 
     handleShowConfirmChange(value: boolean): void {
@@ -179,8 +182,8 @@ class App extends React.Component<any, AppState> {
         this.updateSettings(settings);
     }
 
-    updateTasks(newTasks: TaskItemData[]): void {
-        this.setState({taskListEntries: newTasks});
+    updateTasks(newTasks: TaskItemData[], callback?: (() => void)): void {
+        this.setState({taskListEntries: newTasks}, callback);
         localStorage.setItem('tasks', JSON.stringify(newTasks));
     }
 
