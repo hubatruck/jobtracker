@@ -3,7 +3,15 @@ import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
 import {Button, Input, Layout, Popconfirm, Switch, Tabs} from "antd";
-import {CheckOutlined, CloseOutlined, HomeOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
+import {
+    CheckOutlined,
+    ClearOutlined,
+    CloseOutlined,
+    HomeOutlined,
+    PlusOutlined,
+    SettingOutlined,
+    ThunderboltOutlined
+} from "@ant-design/icons";
 import {WidthLimitedContainer} from "./Components/WidthLimitedContainer";
 import {version} from '../package.json';
 
@@ -233,27 +241,6 @@ class App extends React.Component<any, AppState> {
                     <WidthLimitedContainer className="content-container">
                         <Tabs defaultActiveKey="1" type="card">
                             <Tabs.TabPane tab={<span><HomeOutlined/> Home</span>} key="1">
-                                <div className="button-group">
-                                    <Button
-                                        onClick={this.handleMarkAllDone}
-                                        disabled={!this.activeTaskCount()}
-                                    >
-                                        Mark all as completed
-                                    </Button>
-                                    <Popconfirm
-                                        title="Are you sure? This cannot be undone."
-                                        okText="Yes"
-                                        cancelText="Nah"
-                                        onConfirm={this.handleDeleteAllCompleted}
-                                        placement="bottom"
-                                        disabled={!this.finishedTaskCount()}
-                                    >
-                                        <Button
-                                            danger
-                                            disabled={!this.finishedTaskCount()}
-                                        >Clear completed tasks</Button>
-                                    </Popconfirm>
-                                </div>
                                 <div className="input-container">
                                     <Input.TextArea
                                         placeholder="Type task here..."
@@ -269,7 +256,30 @@ class App extends React.Component<any, AppState> {
                                         type="primary"
                                         onClick={this.handleSubmit}
                                         icon={<PlusOutlined/>}
+                                        style={{marginTop: "5px"}}
                                     > Add </Button>
+                                </div>
+                                <hr/>
+                                <div className="button-group">
+                                    <Button
+                                        onClick={this.handleMarkAllDone}
+                                        disabled={!this.activeTaskCount()}
+                                        icon={<ThunderboltOutlined/>}
+                                    > Mark all as completed </Button>
+                                    <Popconfirm
+                                        title="Are you sure? This cannot be undone."
+                                        okText="Yes"
+                                        cancelText="Nah"
+                                        onConfirm={this.handleDeleteAllCompleted}
+                                        placement="bottom"
+                                        disabled={!this.finishedTaskCount()}
+                                    >
+                                        <Button
+                                            danger
+                                            disabled={!this.finishedTaskCount()}
+                                            icon={<ClearOutlined/>}
+                                        > Clear completed tasks </Button>
+                                    </Popconfirm>
                                 </div>
                                 <div className="App-task-container">
                                     {taskListItems}
