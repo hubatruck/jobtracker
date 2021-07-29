@@ -52,14 +52,6 @@ class App extends React.Component<any, AppState> {
             taskListEntries: []
         };
 
-        this.handleMarkAllDone = this.handleMarkAllDone.bind(this);
-        this.handleDeleteAllCompleted = this.handleDeleteAllCompleted.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleShowConfirmChange = this.handleShowConfirmChange.bind(this);
-        this.handleShowActiveFirst = this.handleShowActiveFirst.bind(this);
-        this.handleShowCompletedTasks = this.handleShowCompletedTasks.bind(this);
-        this.handleClickableLinks = this.handleClickableLinks.bind(this);
-
         message.config({
             maxCount: 2,
             duration: 3
@@ -263,14 +255,14 @@ class App extends React.Component<any, AppState> {
                             <Tabs.TabPane tab={<span><HomeOutlined/> Home</span>} key="1">
                                 <div className="input-container">
                                     <TaskInput
-                                        onSubmit={this.handleSubmit}
+                                        onSubmit={this.handleSubmit.bind(this)}
                                         clearOnSubmit={true}
                                     />
                                 </div>
                                 <hr/>
                                 <div className="button-group">
                                     <Button
-                                        onClick={this.handleMarkAllDone}
+                                        onClick={this.handleMarkAllDone.bind(this)}
                                         disabled={!this.activeTaskCount()}
                                         icon={<ThunderboltOutlined/>}
                                     > Mark all as completed </Button>
@@ -278,7 +270,7 @@ class App extends React.Component<any, AppState> {
                                         title="Are you sure? This cannot be undone."
                                         okText="Yes"
                                         cancelText="Nah"
-                                        onConfirm={this.handleDeleteAllCompleted}
+                                        onConfirm={this.handleDeleteAllCompleted.bind(this)}
                                         placement="bottom"
                                         disabled={!this.finishedTaskCount()}
                                     >
@@ -306,25 +298,25 @@ class App extends React.Component<any, AppState> {
                                     <tr>
                                         <td>Show confirm dialog when deleting</td>
                                         <td>
-                                            {this.createCustomSwitch(this.handleShowConfirmChange, this.state.settings.showConfirmDialog)}
+                                            {this.createCustomSwitch(this.handleShowConfirmChange.bind(this), this.state.settings.showConfirmDialog)}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Show active tasks first</td>
                                         <td>
-                                            {this.createCustomSwitch(this.handleShowActiveFirst, this.state.settings.showActiveTasksFirst)}
+                                            {this.createCustomSwitch(this.handleShowActiveFirst.bind(this), this.state.settings.showActiveTasksFirst)}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Show completed tasks</td>
                                         <td>
-                                            {this.createCustomSwitch(this.handleShowCompletedTasks, this.state.settings.showCompleted)}
+                                            {this.createCustomSwitch(this.handleShowCompletedTasks.bind(this), this.state.settings.showCompleted)}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Make URLs clickable</td>
                                         <td>
-                                            {this.createCustomSwitch(this.handleClickableLinks, this.state.settings.clickableLinks)}
+                                            {this.createCustomSwitch(this.handleClickableLinks.bind(this), this.state.settings.clickableLinks)}
                                         </td>
                                     </tr>
                                     </tbody>
