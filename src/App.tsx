@@ -5,6 +5,7 @@ import {UTIL} from "./Util";
 import {Button, Input, Layout, Popconfirm, Switch, Tabs} from "antd";
 import {CheckOutlined, CloseOutlined, HomeOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
 import {WidthLimitedContainer} from "./Components/WidthLimitedContainer";
+import {version} from '../package.json';
 
 const {Header, Content, Footer} = Layout;
 
@@ -319,7 +320,12 @@ class App extends React.Component<any, AppState> {
                     fontWeight: 'lighter',
                     padding: 5,
                 }}>
-                    &copy; {UTIL.getCopyrightDate()} | hubatruck | build hash: {process.env.REACT_APP_GIT_SHA}
+                    &copy; {UTIL.getCopyrightDate()} hubatruck |
+                    <a className="footer-link" target="_blank" rel="noreferrer"
+                       href="https://github.com/hubatruck/jobtracker">
+                        &nbsp;View project on GitHub&nbsp;
+                    </a>
+                    | build: {process.env.REACT_APP_GIT_SHA}_v{version}
                 </Footer>
             </Layout>
         );
