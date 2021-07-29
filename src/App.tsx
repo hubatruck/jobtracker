@@ -4,6 +4,7 @@ import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
 import {Button, Input, Layout, Popconfirm, Switch, Tabs} from "antd";
 import {CheckOutlined, CloseOutlined, HomeOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
+import {WidthLimitedContainer} from "./Components/WidthLimitedContainer";
 
 const {Header, Content, Footer} = Layout;
 
@@ -224,9 +225,11 @@ class App extends React.Component<any, AppState> {
             <Layout style={{
                 minHeight: '100vh',
             }}>
-                <Header style={{color: 'white'}}>JobTracker</Header>
-                <Content style={{padding: '0 25px'}}>
-                    <div className="layout-content">
+                <Header style={{color: 'white'}}>
+                    <WidthLimitedContainer>JobTracker</WidthLimitedContainer>
+                </Header>
+                <Content className="content">
+                    <WidthLimitedContainer className="content-container">
                         <Tabs defaultActiveKey="1" type="card">
                             <Tabs.TabPane tab={<span><HomeOutlined/> Home</span>} key="1">
                                 <div className="button-group">
@@ -309,8 +312,7 @@ class App extends React.Component<any, AppState> {
                                 </table>
                             </Tabs.TabPane>
                         </Tabs>
-                    </div>
-
+                    </WidthLimitedContainer>
                 </Content>
                 <Footer style={{
                     textAlign: 'center',

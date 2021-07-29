@@ -3,8 +3,16 @@ Header {
     font-size: calc(10px + 2vmin);
 }
 
-.layout-content {
-    padding: 24px;
+.content {
+    padding: 0 25px;
+    margin-top: 5px;
+}
+
+.content-container {
+    background-color: #171717;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 5px;
 }
 
 .input-container {
@@ -14,4 +22,10 @@ Header {
 .settings td, .settings th {
     border: solid 1px #4b4b4b;
     padding: 5px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .content {
+        padding: 0;
+    }
 }
