@@ -91,6 +91,7 @@ class App extends React.Component<any, AppState> {
             active: true,
         });
 
+        this.setState({taskInputValue: ''});
         this.updateTasks(tasks);
         message.success('Task created!').then(() => {
         });
