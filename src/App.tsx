@@ -7,7 +7,7 @@ import {ClearOutlined, HomeOutlined, SettingOutlined, ThunderboltOutlined} from 
 import {WidthLimitedContainer} from './Components/WidthLimitedContainer';
 import {version} from '../package.json';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import TaskInput from './Components/TaskInput';
+import TaskInput, {TaskInputFormData} from './Components/TaskInput';
 import {ISettings, SettingsPage} from './Pages/SettingsPage';
 
 const {Header, Content, Footer} = Layout;
@@ -19,7 +19,7 @@ type TaskItemData = {
 }
 
 type AppState = {
-    newTaskText: string;
+    taskInputValue: string;
     taskListEntries: TaskItemData[];
     settings: ISettings;
 }
@@ -36,7 +36,7 @@ class App extends React.Component<any, AppState> {
         super(props);
 
         this.state = {
-            newTaskText: '',
+            taskInputValue: '',
             settings: {
                 ...defaultSettings,
                 ...JSON.parse(localStorage.getItem('settings') || JSON.stringify({}))
@@ -77,7 +77,7 @@ class App extends React.Component<any, AppState> {
         });
     }
 
-    handleSubmit(submittedValues: { taskName: string }): void {
+    handleSubmit(submittedValues: TaskInputFormData): void {
         const tasks = this.state.taskListEntries.slice();
         const newTask = submittedValues.taskName;
 
@@ -91,9 +91,6 @@ class App extends React.Component<any, AppState> {
             active: true,
         });
 
-        this.setState({
-            newTaskText: '',
-        });
         this.updateTasks(tasks);
         message.success('Task created!').then(() => {
         });
@@ -115,7 +112,7 @@ class App extends React.Component<any, AppState> {
         const deletedElIdx = tasks.findIndex(el => task.UUID === el.UUID);
         if (deletedElIdx >= 0) {
             tasks.splice(deletedElIdx, 1);
-            this.setState({newTaskText: task.text});
+            this.setState({taskInputValue: task.text});
             this.updateTasks(tasks);
             scrollIntoView(
                 document.body.querySelector('.input-container') as Element,
@@ -215,6 +212,7 @@ class App extends React.Component<any, AppState> {
                                     <TaskInput
                                         onSubmit={this.handleSubmit.bind(this)}
                                         clearOnSubmit={true}
+                                        initialValue={this.state.taskInputValue}
                                     />
                                 </div>
                                 <hr/>

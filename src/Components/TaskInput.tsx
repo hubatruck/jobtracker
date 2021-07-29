@@ -5,11 +5,24 @@ import {PlusOutlined} from '@ant-design/icons';
 type TaskInputProps = {
     onSubmit: (values: { taskName: string }) => void;
     clearOnSubmit?: boolean;
+    initialValue?: string;
+}
+
+export type TaskInputFormData = {
+    taskName: string;
 }
 
 /// Note that useForm is a React Hooks that only works in functional component.
 export default function TaskInput(props: TaskInputProps) {
-    const [form] = Form.useForm();
+    const [form] = Form.useForm<TaskInputFormData>();
+
+    /// Not the pretties solution, but it works
+    if (props.initialValue) {
+        setTimeout(() => {
+            form.setFieldsValue({taskName: props.initialValue});
+        }, 0);
+    }
+
     return (
         <Form
             name="newTaskForm"
