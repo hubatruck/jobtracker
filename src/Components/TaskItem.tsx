@@ -57,7 +57,6 @@ export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
                         <Button
                             onClick={this.props.onEdit}
                             icon={<EditOutlined/>}
-                            ghost
                         />
                     </Tooltip>
                     <Popconfirm
@@ -65,7 +64,7 @@ export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
                         okText="Yes"
                         cancelText="Nah"
                         onConfirm={this.props.onDelete}
-                        placement="bottom"
+                        placement="right"
                         onVisibleChange={this.handleVisibleChange}
                     >
                         <Button
