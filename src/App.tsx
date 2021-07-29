@@ -1,9 +1,8 @@
-import React, {ReactElement} from 'react';
+import React, {ChangeEvent, ReactElement} from 'react';
 import './App.css';
 import {TaskItem} from "./Components/TaskItem";
 import {UTIL} from "./Util";
-import {Button, Layout, Popconfirm, Switch, Tabs} from "antd";
-import Search from "antd/es/input/Search";
+import {Button, Input, Layout, Popconfirm, Switch, Tabs} from "antd";
 import {CheckOutlined, CloseOutlined, HomeOutlined, PlusOutlined, SettingOutlined} from "@ant-design/icons";
 
 const {Header, Content, Footer} = Layout;
@@ -76,7 +75,7 @@ class App extends React.Component<any, AppState> {
         this.updateTasks(tasks);
     }
 
-    handleInput(event: React.FormEvent<HTMLInputElement>): void {
+    handleInput(event: ChangeEvent<HTMLTextAreaElement>): void {
         this.setState({newTaskText: event.currentTarget.value});
     }
 
@@ -252,15 +251,21 @@ class App extends React.Component<any, AppState> {
                                     </Popconfirm>
                                 </div>
                                 <div className="input-container">
-                                    <Search
+                                    <Input.TextArea
                                         placeholder="Type task here..."
                                         allowClear
-                                        enterButton={<PlusOutlined/>}
                                         value={this.state.newTaskText}
-                                        onSearch={this.handleSubmit}
-                                        onChange={this.handleInput}
                                         style={{width: 400}}
+                                        autoSize={{minRows: 2}}
+                                        showCount
+                                        maxLength={2000}
+                                        onChange={this.handleInput}
                                     />
+                                    <Button
+                                        type="primary"
+                                        onClick={this.handleSubmit}
+                                        icon={<PlusOutlined/>}
+                                    > Add </Button>
                                 </div>
                                 <div className="App-task-container">
                                     {taskListItems}
