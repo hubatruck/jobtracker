@@ -24,6 +24,13 @@ type AppState = {
     settings: ISettings;
 }
 
+const defaultSettings: ISettings = {
+    showConfirmDialog: true,
+    showActiveTasksFirst: false,
+    showCompleted: true,
+    clickableLinks: true,
+};
+
 class App extends React.Component<any, AppState> {
     constructor(props: any) {
         super(props);
@@ -31,10 +38,8 @@ class App extends React.Component<any, AppState> {
         this.state = {
             newTaskText: '',
             settings: {
-                showConfirmDialog: true,
-                showActiveTasksFirst: false,
-                showCompleted: true,
-                clickableLinks: true,
+                ...defaultSettings,
+                ...JSON.parse(localStorage.getItem('settings') || JSON.stringify({}))
             },
             taskListEntries: []
         };
@@ -50,8 +55,7 @@ class App extends React.Component<any, AppState> {
      */
     componentDidMount(): void {
         const tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify([]));
-        const settings = JSON.parse(localStorage.getItem('settings') || JSON.stringify({showConfirmDialog: true}));
-        this.setState({taskListEntries: tasks, settings: settings});
+        this.setState({taskListEntries: tasks});
     }
 
     handleMarkAllDone(): void {
@@ -148,17 +152,19 @@ class App extends React.Component<any, AppState> {
 
     createTaskListEntry(item: TaskItemData): ReactElement<TaskItem> {
         const settings = this.state.settings;
-        return (<TaskItem
-            key={item.UUID}
-            text={item.text}
-            active={item.active}
-            UUID={item.UUID}
-            onDelete={() => this.handleDelete(item)}
-            onDone={() => this.handleDone(item)}
-            onEdit={() => this.handleEdit(item)}
-            visibleConfirm={settings.showConfirmDialog}
-            clickableLinks={settings.clickableLinks}
-        />);
+        return (
+            <TaskItem
+                key={item.UUID}
+                text={item.text}
+                active={item.active}
+                UUID={item.UUID}
+                onDelete={() => this.handleDelete(item)}
+                onDone={() => this.handleDone(item)}
+                onEdit={() => this.handleEdit(item)}
+                visibleConfirm={settings.showConfirmDialog}
+                clickableLinks={settings.clickableLinks}
+            />
+        );
     }
 
     activeTaskCount(): number {
