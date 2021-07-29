@@ -1,8 +1,8 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement} from 'react';
 import './TaskItem.css'
-import {Button, Popconfirm, Tooltip} from "antd";
-import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import {ShowUrls} from "./ShowUrls";
+import {Button, Popconfirm, Tooltip} from 'antd';
+import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from '@ant-design/icons';
+import {ShowUrls} from './ShowUrls';
 
 type TaskItemState = {
     showingConfirm: boolean,

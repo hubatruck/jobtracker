@@ -25,7 +25,7 @@ export class WidthLimitedContainer extends React.Component<ContentContainerProps
         return <div
             style={{
                 maxWidth: this.state.maxWidth,
-                margin: this.state.centered ? "0 auto" : "initial",
+                margin: this.state.centered ? '0 auto' : 'initial',
                 ...this.state.style,
             }}
             className={this.props.className}

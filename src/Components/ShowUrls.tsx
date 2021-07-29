@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement} from 'react';
 import sanitizeHtml from 'sanitize-html';
 
 type ShowUrlsProps = {
@@ -24,6 +24,6 @@ export class ShowUrls extends React.Component<ShowUrlsProps> {
         } else {
             text = this.props.text;
         }
-        return (<span style={{whiteSpace:"pre-wrap"}} dangerouslySetInnerHTML={{__html: text}}/>);
+        return (<span style={{whiteSpace: 'pre-wrap'}} dangerouslySetInnerHTML={{__html: text}}/>);
     }
 }

@@ -1,14 +1,14 @@
 import React, {ReactElement} from 'react';
 import './App.css';
-import {TaskItem} from "./Components/TaskItem";
-import {UTIL} from "./Util";
-import {Button, Layout, message, Popconfirm, Tabs} from "antd";
-import {ClearOutlined, HomeOutlined, SettingOutlined, ThunderboltOutlined} from "@ant-design/icons";
-import {WidthLimitedContainer} from "./Components/WidthLimitedContainer";
+import {TaskItem} from './Components/TaskItem';
+import {UTIL} from './Util';
+import {Button, Layout, message, Popconfirm, Tabs} from 'antd';
+import {ClearOutlined, HomeOutlined, SettingOutlined, ThunderboltOutlined} from '@ant-design/icons';
+import {WidthLimitedContainer} from './Components/WidthLimitedContainer';
 import {version} from '../package.json';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import TaskInput from "./Components/TaskInput";
-import {ISettings, SettingsPage} from "./Pages/SettingsPage";
+import TaskInput from './Components/TaskInput';
+import {ISettings, SettingsPage} from './Pages/SettingsPage';
 
 const {Header, Content, Footer} = Layout;
 
@@ -64,7 +64,7 @@ class App extends React.Component<any, AppState> {
             return task;
         });
         this.updateTasks(tasks);
-        message.info("All tasks marked completed!").then(() => {
+        message.info('All tasks marked completed!').then(() => {
         });
     }
 
@@ -73,7 +73,7 @@ class App extends React.Component<any, AppState> {
             return task.active;
         })
         this.updateTasks(tasks);
-        message.info("Cleared completed tasks!").then(() => {
+        message.info('Cleared completed tasks!').then(() => {
         });
     }
 
@@ -95,7 +95,7 @@ class App extends React.Component<any, AppState> {
             newTaskText: '',
         });
         this.updateTasks(tasks);
-        message.success("Task created!").then(() => {
+        message.success('Task created!').then(() => {
         });
     }
 
@@ -106,7 +106,7 @@ class App extends React.Component<any, AppState> {
             tasks.splice(deletedElIdx, 1);
             this.updateTasks(tasks);
         }
-        message.info("Task deleted successfully").then(() => {
+        message.info('Task deleted successfully').then(() => {
         });
     }
 
@@ -118,10 +118,10 @@ class App extends React.Component<any, AppState> {
             this.setState({newTaskText: task.text});
             this.updateTasks(tasks);
             scrollIntoView(
-                document.body.querySelector(".input-container") as Element,
+                document.body.querySelector('.input-container') as Element,
                 {
-                    behavior: "smooth",
-                    scrollMode: "if-needed"
+                    behavior: 'smooth',
+                    scrollMode: 'if-needed'
                 });
         }
     }

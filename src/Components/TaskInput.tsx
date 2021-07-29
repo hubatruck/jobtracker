@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Form, Input} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
+import {Button, Form, Input} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
 
 type TaskInputProps = {
     onSubmit: (values: { taskName: string }) => void;
@@ -42,7 +42,7 @@ export default function TaskInput(props: TaskInputProps) {
                     type="primary"
                     htmlType="submit"
                     icon={<PlusOutlined/>}
-                    style={{marginTop: "5px"}}
+                    style={{marginTop: '5px'}}
                 > Add </Button>
             </Form.Item>
         </Form>);

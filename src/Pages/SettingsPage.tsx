@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
-import {Switch} from "antd";
-import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
+import {Switch} from 'antd';
+import {CheckOutlined, CloseOutlined} from '@ant-design/icons';
 
 export type ISettings = {
     showConfirmDialog: boolean;
