@@ -74,7 +74,7 @@ export class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
                         />
                     </Popconfirm>
                 </div>
-                <div className="Task-text">
+                <div className="TaskItem-text">
                     <ShowUrls text={this.props.text} convertLinks={this.props.clickableLinks}/>
                 </div>
             </div>

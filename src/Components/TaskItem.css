@@ -1,4 +1,6 @@
 .TaskItem-container {
+    display: flex;
+    align-items: center;
     margin: 8px;
     padding: 2px;
     border-radius: 5px;
@@ -11,10 +13,10 @@
 }
 
 .TaskItem-controls {
-    display: inline;
     margin: 10px;
+    align-self: flex-start;
 }
 
-.Task-text{
-    display: inline;
+.TaskItem-text{
+    margin: 20px 0;
 }
