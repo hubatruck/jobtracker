@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 import {WidthLimitedContainer} from "./Components/WidthLimitedContainer";
 import {version} from '../package.json';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 const {Header, Content, Footer} = Layout;
 
@@ -138,6 +139,12 @@ class App extends React.Component<any, AppState> {
             tasks.splice(deletedElIdx, 1);
             this.setState({newTaskText: task.text});
             this.updateTasks(tasks);
+            scrollIntoView(
+                document.body.querySelector(".input-container") as Element,
+                {
+                    behavior: "smooth",
+                    scrollMode: "if-needed"
+                });
         }
     }
 
