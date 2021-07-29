@@ -25,11 +25,13 @@ export class SettingsPage extends React.Component<SettingsProps, ISettings> {
         if (Object.keys(this.state).filter(key => key === settingName).length === 0) {
             throw Error(`Unknown setting key '${settingName}'. Did you misspell it?`);
         }
+
+        const settings = this.props.settings;
         return (
             <Switch
                 onChange={(value: boolean) => this.updateSettings(settingName, value)}
                 /// key hack: https://stackoverflow.com/a/64217699
-                checked={this.state[settingName as keyof ISettings]}
+                checked={settings[settingName as keyof ISettings]}
                 checkedChildren={<CheckOutlined/>}
                 unCheckedChildren={<CloseOutlined/>}
             />
