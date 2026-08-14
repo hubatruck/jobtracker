@@ -9,7 +9,7 @@ const commitHash = execSync("git rev-parse --short HEAD").toString().trim();
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
-
+  base: "/jobtracker/",
   define: {
     APP_VERSION: JSON.stringify(packageJson.version),
     GIT_COMMIT: JSON.stringify(commitHash),
